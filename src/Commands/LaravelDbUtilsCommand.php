@@ -10,11 +10,12 @@ class LaravelDbUtilsCommand extends Command
 {
     protected $util;
 
-    protected $command_options = ['dbv','dump'];
+    protected $command_options = ['ver','create','dump'];
 
-    public $signature = 'db
+    public $signature = 'dbu
                         {--ver : Current version of MySQL}
-                        {--dump : Creat mysqldump file}';
+                        {--create= : Create database}
+                        {--dump : Create mysqldump file}';
 
     public $description = 'A package to make common database utilities available as artisan commands';
 
@@ -36,22 +37,27 @@ class LaravelDbUtilsCommand extends Command
                 ->setTimeout(null)
                 ->run();
 
-            if($this->util !== 'dbv') {
+            if($this->util !== 'ver') {
                 $this->info('The ' . $this->util . ' command was successful!');
             }
         }
     }
 
-    public function getDbv()
+    public function getVer()
     {
         return '\\mysql -V';
+    }
+
+    public function getCreate()
+    {
+        return '\\mysqladmin -u root create ' . $this->option('create');
     }
 
     public function getDump()
     {
         // Setup
-        $output_dir = config('mysql-db-utils.dump.output_dir');
-        $timestamp = config('mysql-db-utils.dump.timestamp');
+        $output_dir = config('db-utils.dump.output_dir');
+        $timestamp = config('db-utils.dump.timestamp');
         $database = config('database.connections.mysql.database');
 
         $filename = strtolower($database);
