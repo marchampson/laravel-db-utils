@@ -21,8 +21,8 @@ class LaravelDbUtilsCommand extends Command
 
     public function handle()
     {
-        foreach($this->command_options as $command_option) {
-            if($this->option($command_option)) {
+        foreach ($this->command_options as $command_option) {
+            if ($this->option($command_option)) {
                 $this->util = $this->option($command_option)
                     ? $command_option
                     : null;
@@ -31,13 +31,13 @@ class LaravelDbUtilsCommand extends Command
             }
         }
 
-        if($this->util) {
+        if ($this->util) {
             Process::fromShellCommandline($this->{'get'.ucfirst($this->util)}())
                 ->setTty(true)
                 ->setTimeout(null)
                 ->run();
 
-            if($this->util !== 'ver') {
+            if ($this->util !== 'ver') {
                 $this->info('The ' . $this->util . ' command was successful!');
             }
         }
@@ -62,11 +62,12 @@ class LaravelDbUtilsCommand extends Command
 
         $filename = strtolower($database);
 
-        if($timestamp) {
+        if ($timestamp) {
             $filename .= '-'.date('d-m-Y-H-i');
         }
 
         $this->createDirectoryIfNotExists($output_dir);
+
         return '\\mysqldump -u root ' . $database . ' > ' . $output_dir . '/' . $filename . '.sql';
     }
 
@@ -76,7 +77,7 @@ class LaravelDbUtilsCommand extends Command
      */
     public function createDirectoryIfNotExists(mixed $output_dir): void
     {
-        if (!file_exists($output_dir) && !mkdir($output_dir, 0777, true) && !is_dir($output_dir)) {
+        if (! file_exists($output_dir) && ! mkdir($output_dir, 0777, true) && ! is_dir($output_dir)) {
             throw new RuntimeException(sprintf('Directory "%s" was not created', $output_dir));
         }
     }
