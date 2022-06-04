@@ -2,9 +2,9 @@
 
 namespace Marchampson\LaravelDbUtils;
 
+use Marchampson\LaravelDbUtils\Commands\LaravelDbUtilsCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Marchampson\LaravelDbUtils\Commands\LaravelDbUtilsCommand;
 
 class LaravelDbUtilsServiceProvider extends PackageServiceProvider
 {

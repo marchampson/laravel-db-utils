@@ -3,8 +3,8 @@
 namespace Marchampson\LaravelDbUtils\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Orchestra\Testbench\TestCase as Orchestra;
 use Marchampson\LaravelDbUtils\LaravelDbUtilsServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {
