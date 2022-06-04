@@ -18,8 +18,6 @@ class LaravelDbUtilsServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-db-utils')
             ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_laravel-db-utils_table')
             ->hasCommand(LaravelDbUtilsCommand::class);
     }
 }
