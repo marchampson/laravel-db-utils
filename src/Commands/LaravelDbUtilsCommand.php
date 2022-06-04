@@ -23,9 +23,7 @@ class LaravelDbUtilsCommand extends Command
     {
         foreach($this->command_options as $command_option) {
             if($this->option($command_option)) {
-                $this->util = $this->option($command_option)
-                    ? $command_option
-                    : null;
+                $this->util = $this->option($command_option) ?? $command_option;
 
                 break;
             }
