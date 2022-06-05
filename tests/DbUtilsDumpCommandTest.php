@@ -1,4 +1,5 @@
 <?php
+
 namespace Marchampson\LaravelDbUtils\Tests;
 
 class DbUtilsDumpCommandTest extends TestCase
