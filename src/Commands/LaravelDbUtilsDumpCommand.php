@@ -29,7 +29,7 @@ class LaravelDbUtilsDumpCommand extends Command
         }
 
 
-        if (!$this->createOutputDirectoryIfNotExists()) {
+        if (! $this->createOutputDirectoryIfNotExists()) {
             return;
         }
 
@@ -39,7 +39,6 @@ class LaravelDbUtilsDumpCommand extends Command
             ->run();
 
         $this->info($this->database . ' has been backed up successfully');
-
     }
 
     public function dumpSetup()
@@ -74,8 +73,8 @@ class LaravelDbUtilsDumpCommand extends Command
      */
     public function createOutputDirectoryIfNotExists(): bool
     {
-        return !(!file_exists($this->output_dir)
-            && !mkdir($this->output_dir, 0777, true)
-            && !is_dir($this->output_dir));
+        return ! (! file_exists($this->output_dir)
+            && ! mkdir($this->output_dir, 0777, true)
+            && ! is_dir($this->output_dir));
     }
 }

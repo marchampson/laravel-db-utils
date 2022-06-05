@@ -3,13 +3,11 @@
 namespace Marchampson\LaravelDbUtils\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Artisan;
 use RuntimeException;
 use Symfony\Component\Process\Process;
 
 class LaravelDbUtilsCreateCommand extends Command
 {
-
     public $signature = 'dbu:dump
                         {--debug : Display the underlying command}';
 
@@ -63,9 +61,10 @@ class LaravelDbUtilsCreateCommand extends Command
     public function createDirectoryIfNotExists(): string
     {
         $output_dir = config('db-utils.dump.output_dir');
-        if (!file_exists($output_dir) && !mkdir($output_dir, 0777, true) && !is_dir($output_dir)) {
+        if (! file_exists($output_dir) && ! mkdir($output_dir, 0777, true) && ! is_dir($output_dir)) {
             throw new RuntimeException(sprintf('Directory "%s" was not created', $output_dir));
         }
+
         return $output_dir;
     }
 }
