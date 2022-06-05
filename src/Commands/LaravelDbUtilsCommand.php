@@ -9,11 +9,10 @@ use Symfony\Component\Process\Process;
 class LaravelDbUtilsCommand extends Command
 {
     protected $util;
-
-    protected $command_options = ['ver','create','dump'];
+    protected $command_options = ['v','create','dump'];
 
     public $signature = 'dbu
-                        {--ver : Current version of MySQL}
+                        {--v : Current version of MySQL}
                         {--create= : Create database}
                         {--dump : Create mysqldump file}';
 
@@ -37,13 +36,13 @@ class LaravelDbUtilsCommand extends Command
                 ->setTimeout(null)
                 ->run();
 
-            if ($this->util !== 'ver') {
+            if ($this->util !== 'v') {
                 $this->info('The ' . $this->util . ' command was successful!');
             }
         }
     }
 
-    public function getVer()
+    public function getV()
     {
         return '\\mysql -V';
     }
@@ -56,29 +55,35 @@ class LaravelDbUtilsCommand extends Command
     public function getDump()
     {
         // Setup
-        $output_dir = config('db-utils.dump.output_dir');
-        $timestamp = config('db-utils.dump.timestamp');
+        $output_dir = $this->createDirectoryIfNotExists();
         $database = config('database.connections.mysql.database');
+        $filename = $this->setOutputFilename($database);
 
+        return '\\mysqldump -u root ' . $database . ' > ' . $output_dir . '/' . $filename . '.sql';
+    }
+
+    public function setOutputFilename($database): string
+    {
         $filename = strtolower($database);
+
+        $timestamp = config('db-utils.dump.timestamp');
 
         if ($timestamp) {
             $filename .= '-'.date('d-m-Y-H-i');
         }
 
-        $this->createDirectoryIfNotExists($output_dir);
-
-        return '\\mysqldump -u root ' . $database . ' > ' . $output_dir . '/' . $filename . '.sql';
+        return $filename;
     }
 
     /**
-     * @param mixed $output_dir
-     * @return void
+     * @return string
      */
-    public function createDirectoryIfNotExists(mixed $output_dir): void
+    public function createDirectoryIfNotExists(): string
     {
+        $output_dir = config('db-utils.dump.output_dir');
         if (! file_exists($output_dir) && ! mkdir($output_dir, 0777, true) && ! is_dir($output_dir)) {
             throw new RuntimeException(sprintf('Directory "%s" was not created', $output_dir));
         }
+        return $output_dir;
     }
 }
