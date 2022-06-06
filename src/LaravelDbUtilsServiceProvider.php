@@ -2,6 +2,7 @@
 
 namespace Marchampson\LaravelDbUtils;
 
+use Marchampson\LaravelDbUtils\Commands\LaravelDbUtilsCreateCommand;
 use Marchampson\LaravelDbUtils\Commands\LaravelDbUtilsDumpCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -18,6 +19,9 @@ class LaravelDbUtilsServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-db-utils')
             ->hasConfigFile()
-            ->hasCommand(LaravelDbUtilsDumpCommand::class);
+            ->hasCommands([
+                LaravelDbUtilsDumpCommand::class,
+                LaravelDbUtilsCreateCommand::class
+            ]);
     }
 }

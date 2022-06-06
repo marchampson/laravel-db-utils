@@ -2,15 +2,16 @@
 
 namespace Marchampson\LaravelDbUtils\Tests;
 
-class DbUtilsDumpCommandTest extends TestCase
+class DbUtilsCreateCommandTest extends TestCase
 {
     /** @test */
-    public function the_dump_command_is_correct()
+    public function the_create_command_is_correct()
     {
         $this
-            ->artisan('dbu:dump', [
+            ->artisan('dbu:create', [
+                '--name' => 'test',
                 '--debug' => true,
             ])
-            ->expectsOutput('\mysqldump -u root test > ~/Downloads/test.sql');
+            ->expectsOutput('\mysqladmin -u root create test');
     }
 }
