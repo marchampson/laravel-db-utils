@@ -21,7 +21,7 @@ class LaravelDbUtilsServiceProvider extends PackageServiceProvider
             ->hasConfigFile()
             ->hasCommands([
                 LaravelDbUtilsDumpCommand::class,
-                LaravelDbUtilsCreateCommand::class
+                LaravelDbUtilsCreateCommand::class,
             ]);
     }
 }

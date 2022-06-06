@@ -32,6 +32,5 @@ class LaravelDbUtilsCreateCommand extends Command
     public function create()
     {
         return '\\mysqladmin -u root create ' . $this->option('name');
-
     }
 }
